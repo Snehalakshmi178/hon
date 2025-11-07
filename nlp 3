@@ -1,0 +1,31 @@
+import nltk
+from nltk import RegexpTagger, word_tokenize, pos_tag
+
+
+ nltk.download('punkt')
+ nltk.download('averaged_perceptron_tagger_eng')
+
+sentence = "The quick brown fox jumps over the lazy dog"
+tokens = word_tokenize(sentence)
+
+\
+patterns = [
+(r'.*ing$', 'VBG'),  # Gerund/present participle
+(r'.*ed$', 'VBD'),  # Simple past
+(r'.*es$', 'VBZ'),  # 3rd singular present
+(r'^-?[0-9]+$', 'CD'), # Cardinal number
+(r'.*', 'NN')        # Default to Noun (NN)
+]
+
+rule_based_tagger = RegexpTagger(patterns)
+rule_based_tags = rule_based_tagger.tag(tokens)
+
+
+stochastic_tags = pos_tag(tokens)
+
+print("Input Sentence:")
+print(sentence)
+print("\nRule-Based POS Tags:")
+print(rule_based_tags)
+print("\nStochastic POS Tags (using NLTK Perceptron Tagger):")
+print(stochastic_tags)
